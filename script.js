@@ -10,11 +10,13 @@ const navMenu = document.getElementById('navMenu');
 hamburger.addEventListener('click', () => {
   hamburger.classList.toggle('active');
   navMenu.classList.toggle('open');
+  document.body.classList.toggle('menu-open');
 });
 navMenu.querySelectorAll('a').forEach(link => {
   link.addEventListener('click', () => {
     hamburger.classList.remove('active');
     navMenu.classList.remove('open');
+    document.body.classList.remove('menu-open');
   });
 });
  

@@ -83,7 +83,7 @@ body {
    ============================================ */
 .header {
   position: fixed; top: 0; left: 0; width: 100%; z-index: 999;
-  display: flex; align-items: center; justify-content: space-between;
+  display: flex; align-items: center; justify-content: flex-end; gap: 18px;
   padding: 20px 60px;
   transition: background 0.5s ease, backdrop-filter 0.5s ease, box-shadow 0.5s ease;
 }
@@ -93,10 +93,7 @@ body {
   box-shadow: 0 8px 32px rgba(0,0,0,0.3);
 }
 .logo {
-  font-size: 26px; font-weight: 800; letter-spacing: -0.5px;
-  background: var(--gradient-text);
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-  text-decoration: none;
+  display: none;
 }
 .nav-menu {
   display: flex; gap: 20px; list-style: none;
@@ -133,6 +130,8 @@ body {
 .hamburger {
   display: none; flex-direction: column; gap: 5px;
   cursor: pointer; background: none; border: none; padding: 8px;
+  order: -1; margin-right: auto;
+  position: relative; z-index: 1001;
 }
 .hamburger span {
   width: 26px; height: 3px; background: var(--color-light);
@@ -864,13 +863,14 @@ body {
 }
 @media (max-width: 768px) {
   .header { padding: 16px 20px; }
-  .nav-menu { display: none; flex-direction: column; position: fixed; inset: 60px 0 0 0; width: auto; min-height: calc(100vh - 60px); max-width: 100vw; background: var(--color-primary); padding: 12px 20px 20px; gap: 0; overflow-y: auto; overflow-x: hidden; justify-content: flex-start; }
+  .nav-menu { display: none; flex-direction: column; position: fixed; top: 60px; left: 0; right: 0; bottom: 0; width: 100%; max-width: 100vw; background: var(--color-primary); padding: 80px 20px 20px; gap: 0; overflow-y: auto; overflow-x: hidden; justify-content: flex-start; z-index: 999; }
   .nav-menu.open { display: flex; }
   .nav-menu li { width: 100%; }
-  .nav-menu li a { display: block; width: 100%; padding: 14px 0; border-bottom: 1px solid rgba(255,255,255,0.08); }
+  .nav-menu li a { display: block; width: 100%; padding: 16px 0; border-bottom: 1px solid rgba(255,255,255,0.08); }
   .nav-menu li:last-child a { border-bottom: none; }
   .hamburger { display: flex; }
   .nav-cta { display: none; }
+  .menu-open { overflow: hidden; height: 100vh; }
  
   .hero { padding: 100px 24px 60px; }
   .section { padding: 60px 24px; }
