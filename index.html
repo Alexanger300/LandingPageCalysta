@@ -1,0 +1,1200 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Calysta — Salles de Sieste & Récupération Mentale</title>
+<style>
+/* ============================================
+   VARIABLES ET COULEURS (charte imposée)
+   ============================================ */
+:root {
+  --gradient-primary: linear-gradient(180deg, #838BC5 0%, #564DB0 40.38%, #1B1464 100%);
+  --gradient-secondary: linear-gradient(180deg, #838BC5 22%, #564DB0 40.38%, #1B1464 100%);
+  --gradient-text: linear-gradient(90deg, #E3CB93 0%, #C58BA6 79.33%);
+  --color-primary: #1B1464;
+  --color-primary-transparent: rgba(27, 20, 100, 0.60);
+  --color-accent: #E3CB93;
+  --color-light: #D9D9D9;
+  --color-white: #FFFFFF;
+  --color-purple: #564DB0;
+  --color-light-purple: #838BC5;
+}
+
+/* ============================================
+   RESET & BASE
+   ============================================ */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'NationalPark', 'Helvetica Neue', Helvetica, sans-serif;
+  background-color: var(--color-primary);
+  color: var(--color-light);
+  overflow-x: hidden;
+}
+
+/* ============================================
+   KEYFRAMES
+   ============================================ */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-50px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(50px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.5; }
+}
+@keyframes floatY {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-12px); }
+}
+@keyframes shimmer {
+  0%   { background-position: -1000px 0; }
+  100% { background-position:  1000px 0; }
+}
+@keyframes starPulse {
+  0%, 100% { transform: scale(1) rotate(0deg); opacity: 0.4; }
+  50%       { transform: scale(1.15) rotate(10deg); opacity: 0.7; }
+}
+@keyframes lineGrow {
+  from { width: 0; }
+  to   { width: 60px; }
+}
+@keyframes countUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ============================================
+   HEADER / NAV
+   ============================================ */
+.header {
+  position: fixed; top: 0; left: 0; width: 100%; z-index: 999;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 20px 60px;
+  transition: background 0.5s ease, backdrop-filter 0.5s ease, box-shadow 0.5s ease;
+}
+.header.scrolled {
+  background: rgba(27, 20, 100, 0.92);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+}
+.logo {
+  font-size: 26px; font-weight: 800; letter-spacing: -0.5px;
+  background: var(--gradient-text);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  text-decoration: none;
+}
+.nav-menu {
+  display: flex; gap: 48px; list-style: none;
+}
+.nav-link {
+  font-size: 15px; font-weight: 600; color: var(--color-light);
+  text-decoration: none; transition: color 0.3s;
+  letter-spacing: 0.03em;
+}
+.nav-link:hover { color: var(--color-accent); }
+.nav-cta {
+  background: var(--color-accent); color: var(--color-primary);
+  padding: 10px 28px; border-radius: 30px;
+  font-weight: 700; font-size: 15px; text-decoration: none;
+  transition: all 0.3s ease;
+}
+.nav-cta:hover { background: #d4b89f; transform: translateY(-2px); box-shadow: 0 8px 20px rgba(227,203,147,0.35); }
+
+.hamburger {
+  display: none; flex-direction: column; gap: 5px;
+  cursor: pointer; background: none; border: none; padding: 8px;
+}
+.hamburger span {
+  width: 26px; height: 3px; background: var(--color-light);
+  border-radius: 2px; transition: all 0.3s;
+}
+.hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 8px); }
+.hamburger.active span:nth-child(2) { opacity: 0; }
+.hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -8px); }
+
+/* ============================================
+   HERO
+   ============================================ */
+.hero {
+  position: relative; width: 100%; min-height: 100vh;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  text-align: center;
+  padding: 120px 40px 80px;
+  background: var(--gradient-primary);
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 80% 60% at 50% 30%, rgba(86,77,176,0.35) 0%, transparent 70%);
+  pointer-events: none;
+}
+/* Floating orbs */
+.hero-orb {
+  position: absolute; border-radius: 50%;
+  pointer-events: none; opacity: 0.15;
+  animation: floatY 6s ease-in-out infinite;
+}
+.hero-orb-1 {
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, var(--color-light-purple), transparent);
+  top: -100px; left: -100px; animation-delay: 0s;
+}
+.hero-orb-2 {
+  width: 350px; height: 350px;
+  background: radial-gradient(circle, var(--color-accent), transparent);
+  bottom: 0; right: -50px; animation-delay: 3s;
+}
+
+.hero-kicker {
+  font-size: 13px; font-weight: 700; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--color-light-purple);
+  margin-bottom: 24px;
+  animation: fadeInDown 0.7s ease-out both;
+}
+.hero-title {
+  font-size: clamp(40px, 6vw, 80px);
+  font-weight: 800; line-height: 1.1;
+  max-width: 920px;
+  background: var(--gradient-text);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  margin-bottom: 28px;
+  animation: fadeInUp 0.8s ease-out 0.1s both;
+}
+.hero-subtitle {
+  font-size: clamp(16px, 2vw, 22px);
+  font-weight: 400; line-height: 1.6;
+  color: var(--color-light); max-width: 680px;
+  margin-bottom: 52px;
+  animation: fadeInUp 0.8s ease-out 0.25s both;
+}
+.hero-buttons {
+  display: flex; gap: 20px; flex-wrap: wrap; justify-content: center;
+  animation: fadeInUp 0.8s ease-out 0.4s both;
+}
+.btn-primary {
+  background: var(--color-accent); color: var(--color-primary);
+  padding: 16px 44px; border-radius: 50px;
+  font-size: 17px; font-weight: 800; text-decoration: none;
+  transition: all 0.3s ease; border: none; cursor: pointer;
+  letter-spacing: 0.02em;
+}
+.btn-primary:hover {
+  background: #d4b89f; transform: translateY(-4px);
+  box-shadow: 0 16px 40px rgba(227,203,147,0.4);
+}
+.btn-secondary {
+  background: transparent; color: var(--color-white);
+  padding: 16px 44px; border-radius: 50px;
+  font-size: 17px; font-weight: 700; text-decoration: none;
+  border: 2px solid rgba(255,255,255,0.3); cursor: pointer;
+  transition: all 0.3s ease; letter-spacing: 0.02em;
+}
+.btn-secondary:hover {
+  border-color: var(--color-accent); color: var(--color-accent);
+  transform: translateY(-4px);
+}
+.hero-scroll {
+  position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%);
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+  opacity: 0.5; animation: fadeIn 1s 1.2s both;
+}
+.hero-scroll span { font-size: 12px; letter-spacing: 0.15em; text-transform: uppercase; }
+.scroll-line {
+  width: 1px; height: 50px;
+  background: linear-gradient(to bottom, var(--color-accent), transparent);
+  animation: pulse 2s infinite;
+}
+
+/* ============================================
+   SECTION GÉNÉRIQUE
+   ============================================ */
+.section {
+  width: 100%; max-width: 1180px;
+  margin: 0 auto; padding: 100px 40px;
+}
+.section-kicker {
+  font-size: 13px; font-weight: 700;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--color-light-purple); margin-bottom: 16px;
+  display: flex; align-items: center; gap: 12px;
+}
+.section-kicker::before {
+  content: '';
+  display: inline-block; width: 30px; height: 2px;
+  background: var(--color-light-purple);
+}
+.section-title {
+  font-size: clamp(32px, 4vw, 52px);
+  font-weight: 800; line-height: 1.15;
+  max-width: 780px; margin-bottom: 20px;
+  background: var(--gradient-text);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.section-subtitle {
+  font-size: 18px; font-weight: 400; line-height: 1.65;
+  color: var(--color-light); max-width: 640px; margin-bottom: 60px;
+}
+
+/* ============================================
+   PROBLÈMES — STATS CHOCS
+   ============================================ */
+.problems-wrap {
+  background: linear-gradient(180deg, #1B1464 0%, rgba(86,77,176,0.5) 50%, #1B1464 100%);
+  border-radius: 40px; padding: 80px 60px;
+  position: relative; overflow: hidden;
+}
+.problems-wrap::before {
+  content: '';
+  position: absolute; top: -200px; right: -200px;
+  width: 600px; height: 600px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(227,203,147,0.08), transparent 70%);
+  pointer-events: none;
+}
+.problems-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 40px; margin-top: 60px;
+}
+.problem-card {
+  text-align: center; padding: 32px 20px;
+  border: 1px solid rgba(227,203,147,0.15);
+  border-radius: 20px;
+  background: rgba(27,20,100,0.5);
+  transition: all 0.3s ease;
+  opacity: 0; transform: translateY(30px);
+  transition: opacity 0.6s ease, transform 0.6s ease, background 0.3s ease, box-shadow 0.3s ease;
+}
+.problem-card.visible {
+  opacity: 1; transform: translateY(0);
+}
+.problem-card:hover {
+  background: rgba(86,77,176,0.3);
+  box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+  border-color: rgba(227,203,147,0.35);
+}
+.problem-stat {
+  font-size: clamp(48px, 6vw, 72px);
+  font-weight: 800; line-height: 1;
+  background: var(--gradient-text);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  margin-bottom: 16px;
+}
+.problem-desc {
+  font-size: 15px; line-height: 1.6; color: var(--color-light);
+  max-width: 220px; margin: 0 auto;
+}
+
+.pain-list {
+  display: grid; grid-template-columns: repeat(2, 1fr);
+  gap: 20px; margin-top: 48px;
+}
+.pain-item {
+  display: flex; align-items: flex-start; gap: 16px;
+  padding: 24px; border-radius: 16px;
+  background: rgba(86,77,176,0.15);
+  border: 1px solid rgba(131,139,197,0.2);
+  transition: all 0.3s ease;
+  opacity: 0; transform: translateX(-20px);
+  transition: opacity 0.5s ease, transform 0.5s ease, background 0.3s ease;
+}
+.pain-item.visible { opacity: 1; transform: translateX(0); }
+.pain-item:hover { background: rgba(86,77,176,0.3); }
+.pain-icon {
+  width: 48px; height: 48px; border-radius: 12px;
+  background: rgba(227,203,147,0.15);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px; flex-shrink: 0;
+}
+.pain-text h4 {
+  font-size: 16px; font-weight: 700; color: var(--color-white); margin-bottom: 6px;
+}
+.pain-text p { font-size: 14px; line-height: 1.55; color: var(--color-light); }
+
+/* ============================================
+   PRISE DE CONSCIENCE
+   ============================================ */
+.awareness-section {
+  background: var(--color-primary);
+}
+.awareness-inner {
+  text-align: center;
+}
+.awareness-quote {
+  font-size: clamp(24px, 3.5vw, 44px);
+  font-weight: 800; line-height: 1.2;
+  max-width: 860px; margin: 0 auto 48px;
+  background: var(--gradient-text);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  position: relative;
+}
+.awareness-quote::before {
+  content: '"';
+  font-size: 120px; font-weight: 800; line-height: 0;
+  position: absolute; top: 40px; left: -20px;
+  color: rgba(227,203,147,0.1);
+  font-family: Georgia, serif;
+}
+.cost-cards {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 24px; margin-top: 40px;
+}
+.cost-card {
+  padding: 36px 28px; border-radius: 24px;
+  background: linear-gradient(135deg, rgba(86,77,176,0.4), rgba(27,20,100,0.6));
+  border: 1px solid rgba(131,139,197,0.25);
+  text-align: left; transition: all 0.4s ease;
+  opacity: 0; transform: translateY(30px);
+  transition: opacity 0.6s ease, transform 0.6s ease, box-shadow 0.3s ease;
+}
+.cost-card.visible { opacity: 1; transform: translateY(0); }
+.cost-card:hover { box-shadow: 0 24px 60px rgba(0,0,0,0.4); transform: translateY(-6px); }
+.cost-card-icon { font-size: 36px; margin-bottom: 20px; }
+.cost-card h3 {
+  font-size: 20px; font-weight: 800; color: var(--color-accent);
+  margin-bottom: 12px;
+}
+.cost-card p { font-size: 15px; line-height: 1.6; color: var(--color-light); }
+
+/* ============================================
+   SOLUTION
+   ============================================ */
+.solution-section { background: var(--color-primary); }
+.solution-layout {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 80px; align-items: center;
+}
+.solution-visual {
+  position: relative;
+}
+.solution-room {
+  width: 100%; aspect-ratio: 4/3;
+  border-radius: 32px;
+  background: linear-gradient(135deg, rgba(131,139,197,0.2), rgba(86,77,176,0.4));
+  border: 1px solid rgba(227,203,147,0.2);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 12px;
+  position: relative; overflow: hidden;
+}
+.solution-room::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at center, rgba(227,203,147,0.06), transparent 70%);
+}
+.room-moon {
+  font-size: 80px;
+  animation: floatY 4s ease-in-out infinite;
+}
+.room-label {
+  font-size: 13px; font-weight: 700; letter-spacing: 0.15em;
+  text-transform: uppercase; color: var(--color-light-purple);
+}
+.solution-badges {
+  position: absolute; top: -20px; right: -20px;
+  display: flex; flex-direction: column; gap: 10px;
+}
+.badge {
+  background: rgba(27,20,100,0.9);
+  border: 1px solid rgba(227,203,147,0.3);
+  border-radius: 50px; padding: 8px 16px;
+  font-size: 13px; font-weight: 700;
+  color: var(--color-accent); white-space: nowrap;
+  backdrop-filter: blur(8px);
+}
+
+.solution-features { display: flex; flex-direction: column; gap: 24px; }
+.sol-feature {
+  display: flex; align-items: flex-start; gap: 20px;
+  padding: 24px; border-radius: 16px;
+  border: 1px solid rgba(131,139,197,0.2);
+  background: rgba(86,77,176,0.1);
+  transition: all 0.3s ease;
+  opacity: 0; transform: translateX(30px);
+  transition: opacity 0.5s ease, transform 0.5s ease, background 0.3s ease;
+}
+.sol-feature.visible { opacity: 1; transform: translateX(0); }
+.sol-feature:hover { background: rgba(86,77,176,0.25); border-color: rgba(227,203,147,0.3); }
+.sol-icon {
+  width: 52px; height: 52px; border-radius: 14px;
+  background: rgba(227,203,147,0.12);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 24px; flex-shrink: 0;
+}
+.sol-text h4 {
+  font-size: 17px; font-weight: 800; color: var(--color-white); margin-bottom: 6px;
+}
+.sol-text p { font-size: 14px; line-height: 1.6; color: var(--color-light); }
+
+/* ============================================
+   BÉNÉFICES PAR CIBLE
+   ============================================ */
+.benefits-section { background: var(--color-primary); }
+.benefits-tabs {
+  display: flex; gap: 0; margin-bottom: 48px;
+  border: 1px solid rgba(131,139,197,0.3);
+  border-radius: 50px; overflow: hidden; display: inline-flex;
+}
+.tab-btn {
+  padding: 14px 40px; font-size: 15px; font-weight: 700;
+  background: transparent; border: none; cursor: pointer;
+  color: var(--color-light); transition: all 0.3s ease;
+  letter-spacing: 0.04em;
+}
+.tab-btn.active {
+  background: var(--color-accent); color: var(--color-primary);
+}
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+.benefits-grid {
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px;
+}
+.benefit-item {
+  display: flex; align-items: center; gap: 16px;
+  padding: 20px 24px; border-radius: 14px;
+  background: rgba(86,77,176,0.15);
+  border: 1px solid rgba(131,139,197,0.2);
+  transition: all 0.3s ease;
+}
+.benefit-item:hover { background: rgba(86,77,176,0.3); }
+.benefit-check {
+  width: 36px; height: 36px; border-radius: 50%;
+  background: rgba(227,203,147,0.15);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px; flex-shrink: 0;
+}
+.benefit-item span { font-size: 15px; font-weight: 600; color: var(--color-white); }
+
+/* ============================================
+   OFFRES
+   ============================================ */
+.offers-section {
+  background: linear-gradient(180deg, var(--color-primary) 0%, rgba(86,77,176,0.3) 50%, var(--color-primary) 100%);
+}
+.offers-grid {
+  display: grid; grid-template-columns: repeat(2, 1fr);
+  gap: 32px; margin-top: 16px;
+}
+.offer-card {
+  border-radius: 32px; padding: 52px 44px;
+  position: relative; overflow: hidden;
+  transition: all 0.4s ease;
+  opacity: 0; transform: translateY(30px);
+  transition: opacity 0.6s ease, transform 0.6s ease, box-shadow 0.3s ease;
+}
+.offer-card.visible { opacity: 1; transform: translateY(0); }
+.offer-card--location {
+  background: rgba(86,77,176,0.35);
+  border: 1px solid rgba(131,139,197,0.35);
+}
+.offer-card--custom {
+  background: rgba(227,203,147,0.08);
+  border: 2px solid rgba(227,203,147,0.4);
+}
+.offer-card:hover { transform: translateY(-8px) !important; box-shadow: 0 30px 70px rgba(0,0,0,0.4); }
+.offer-tag {
+  display: inline-block; padding: 6px 18px; border-radius: 50px;
+  font-size: 12px; font-weight: 700; letter-spacing: 0.15em;
+  text-transform: uppercase; margin-bottom: 28px;
+}
+.offer-tag--location { background: rgba(131,139,197,0.25); color: var(--color-light-purple); }
+.offer-tag--custom { background: rgba(227,203,147,0.2); color: var(--color-accent); }
+.offer-title {
+  font-size: clamp(28px, 3vw, 38px); font-weight: 800;
+  color: var(--color-white); margin-bottom: 16px; line-height: 1.1;
+}
+.offer-desc { font-size: 16px; line-height: 1.65; color: var(--color-light); margin-bottom: 32px; }
+.offer-perks { list-style: none; display: flex; flex-direction: column; gap: 12px; margin-bottom: 40px; }
+.offer-perks li {
+  display: flex; align-items: center; gap: 12px;
+  font-size: 15px; font-weight: 600; color: var(--color-white);
+}
+.offer-perks li::before {
+  content: '✦'; color: var(--color-accent); font-size: 12px; flex-shrink: 0;
+}
+.offer-guarantee {
+  padding: 14px 20px; border-radius: 12px;
+  background: rgba(27,20,100,0.5);
+  border: 1px solid rgba(227,203,147,0.2);
+  font-size: 13px; font-weight: 600;
+  color: var(--color-accent); margin-bottom: 32px;
+  display: flex; align-items: center; gap: 10px;
+}
+
+/* ============================================
+   DIFFÉRENCIATION
+   ============================================ */
+.diff-section { background: var(--color-primary); }
+.diff-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: 24px; margin-top: 16px;
+}
+.diff-card {
+  text-align: center; padding: 40px 24px; border-radius: 24px;
+  background: rgba(86,77,176,0.12);
+  border: 1px solid rgba(131,139,197,0.2);
+  transition: all 0.4s ease;
+  opacity: 0; transform: translateY(30px);
+  transition: opacity 0.5s ease, transform 0.5s ease, background 0.3s ease;
+}
+.diff-card.visible { opacity: 1; transform: translateY(0); }
+.diff-card:hover {
+  background: rgba(86,77,176,0.3);
+  border-color: rgba(227,203,147,0.3);
+  transform: translateY(-8px) !important;
+}
+.diff-icon { font-size: 48px; margin-bottom: 20px; display: block; }
+.diff-title {
+  font-size: 17px; font-weight: 800; color: var(--color-accent);
+  margin-bottom: 10px;
+}
+.diff-text { font-size: 14px; line-height: 1.6; color: var(--color-light); }
+
+/* ============================================
+   COMMUNAUTÉ
+   ============================================ */
+.community-section {
+  text-align: center;
+  background: linear-gradient(180deg, #1B1464 0%, rgba(86,77,176,0.4) 50%, #1B1464 100%);
+  border-radius: 40px;
+  margin: 0 40px;
+  padding: 80px 60px;
+}
+.community-visual {
+  margin: 48px auto; position: relative;
+  width: 200px; height: 200px;
+}
+.community-visual .ring {
+  position: absolute; border-radius: 50%;
+  border: 1px solid rgba(227,203,147,0.25);
+  animation: starPulse 4s ease-in-out infinite;
+}
+.ring-1 { inset: 0; }
+.ring-2 { inset: -30px; animation-delay: 0.5s; }
+.ring-3 { inset: -60px; animation-delay: 1s; opacity: 0.5; }
+.community-core {
+  position: absolute; inset: 20px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(227,203,147,0.3), rgba(86,77,176,0.5));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 60px;
+}
+.community-text { font-size: 18px; line-height: 1.7; color: var(--color-light); max-width: 640px; margin: 0 auto 40px; }
+
+/* ============================================
+   FAQ
+   ============================================ */
+.faq-section {
+  padding: 80px 20px 120px;
+  width: 100%; max-width: 1180px;
+  margin: 0 auto;
+}
+.faq-container {
+  background: linear-gradient(180deg, #1B1464 0%, rgba(86,77,176,0.5) 50.96%, #1B1464 100%);
+  border-radius: 0 0 100px 100px;
+  padding: 80px 60px;
+  display: flex; gap: 60px; align-items: flex-start;
+}
+.faq-left { flex: 1; max-width: 491px; }
+.faq-kicker {
+  font-size: 13px; font-weight: 700; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--color-light-purple); margin-bottom: 16px;
+}
+.faq-title {
+  font-size: clamp(32px, 3vw, 48px); font-weight: 800; line-height: 1.15;
+  background: var(--gradient-text);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  margin-bottom: 20px;
+}
+.faq-subtitle { font-size: 18px; line-height: 1.6; color: var(--color-light); }
+.faq-right { flex: 1; }
+.faq-item { border-bottom: 1px solid rgba(255,255,255,0.15); }
+.faq-question {
+  width: 100%; display: flex; justify-content: space-between; align-items: center;
+  background: none; border: none; padding: 20px 0; cursor: pointer;
+  font-size: 17px; font-weight: 600; color: var(--color-light);
+  text-align: left; transition: color 0.3s;
+  font-family: 'NationalPark', 'Helvetica Neue', Helvetica, sans-serif;
+}
+.faq-question:hover { color: var(--color-white); }
+.faq-item.active .faq-question { color: var(--color-accent); }
+.faq-icon {
+  font-size: 24px; flex-shrink: 0; margin-left: 20px;
+  transition: transform 0.4s cubic-bezier(0.68,-0.55,0.265,1.55);
+  color: var(--color-light);
+}
+.faq-item.active .faq-icon { transform: rotate(135deg); color: var(--color-accent); }
+.faq-answer {
+  max-height: 0; overflow: hidden;
+  transition: max-height 0.5s ease, opacity 0.4s ease, padding 0.3s ease;
+  font-size: 15px; line-height: 1.7; color: var(--color-light);
+  opacity: 0;
+}
+.faq-item.active .faq-answer { max-height: 300px; padding-bottom: 20px; opacity: 1; }
+
+/* ============================================
+   CTA FINAL
+   ============================================ */
+.cta-final {
+  text-align: center; padding: 120px 40px;
+  background: var(--gradient-primary);
+  position: relative; overflow: hidden;
+}
+.cta-final::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 60% 70% at 50% 50%, rgba(86,77,176,0.4), transparent);
+}
+.cta-final-kicker {
+  font-size: 13px; font-weight: 700; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--color-light-purple); margin-bottom: 24px;
+  position: relative;
+}
+.cta-final-title {
+  font-size: clamp(36px, 5vw, 72px); font-weight: 800; line-height: 1.1;
+  max-width: 800px; margin: 0 auto 24px;
+  background: var(--gradient-text);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  position: relative;
+}
+.cta-final-sub {
+  font-size: 18px; line-height: 1.65; color: var(--color-light);
+  max-width: 560px; margin: 0 auto 52px; position: relative;
+}
+.cta-final-buttons { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; position: relative; }
+
+/* ============================================
+   FOOTER V2
+   ============================================ */
+.footer-v2-wrap { width: 100%; background: var(--color-primary); }
+.footer-v2 {
+  background: linear-gradient(180deg, #564DB0 0%, #3E379B 100%);
+  border-radius: 20px 20px 0 0;
+  padding: 26px 60px 40px; text-align: center;
+}
+.footer-v2-title {
+  font-size: clamp(32px, 4vw, 64px); font-weight: 700; line-height: 1.15;
+  background: var(--gradient-text);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  margin-bottom: 8px;
+}
+.footer-v2-subtitle {
+  font-size: 18px; font-weight: 600; color: var(--color-light-purple); margin-bottom: 20px;
+}
+.footer-v2-social { margin-top: 20px; display: flex; justify-content: center; gap: 16px; }
+.footer-v2-social a {
+  width: 40px; height: 40px; border-radius: 50%;
+  background: rgba(255,255,255,0.1);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--color-white); text-decoration: none; font-size: 18px;
+  transition: all 0.3s ease;
+}
+.footer-v2-social a:hover { background: rgba(227,203,147,0.25); transform: translateY(-3px); }
+.footer-v2-bottom {
+  max-width: 1180px; margin: 24px auto 0;
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 13px; color: rgba(217,217,217,0.5);
+  border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px;
+}
+.footer-v2-links { display: flex; gap: 32px; }
+.footer-v2-links a { color: rgba(217,217,217,0.5); text-decoration: none; font-size: 13px; transition: color 0.3s; }
+.footer-v2-links a:hover { color: var(--color-accent); }
+
+/* ============================================
+   SCROLL REVEAL
+   ============================================ */
+.reveal {
+  opacity: 0; transform: translateY(40px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+@media (max-width: 1024px) {
+  .problems-grid { grid-template-columns: repeat(2, 1fr); }
+  .cost-cards { grid-template-columns: repeat(2, 1fr); }
+  .diff-grid { grid-template-columns: repeat(2, 1fr); }
+  .solution-layout { grid-template-columns: 1fr; gap: 48px; }
+  .solution-badges { top: 10px; right: 10px; }
+}
+@media (max-width: 768px) {
+  .header { padding: 16px 24px; }
+  .nav-menu { display: none; flex-direction: column; position: fixed; top: 60px; left: 0; width: 100%; background: var(--color-primary); padding: 20px; gap: 0; }
+  .nav-menu.open { display: flex; }
+  .nav-menu li a { display: block; padding: 14px 0; border-bottom: 1px solid rgba(255,255,255,0.08); }
+  .hamburger { display: flex; }
+  .nav-cta { display: none; }
+
+  .hero { padding: 100px 24px 60px; }
+  .section { padding: 60px 24px; }
+  .problems-grid { grid-template-columns: 1fr; }
+  .pain-list { grid-template-columns: 1fr; }
+  .cost-cards { grid-template-columns: 1fr; }
+  .offers-grid { grid-template-columns: 1fr; }
+  .diff-grid { grid-template-columns: repeat(2, 1fr); }
+  .benefits-grid { grid-template-columns: 1fr; }
+  .community-section { margin: 0 16px; padding: 60px 24px; }
+  .faq-container { flex-direction: column; padding: 40px 24px; }
+  .faq-left { max-width: 100%; }
+  .cta-final { padding: 80px 24px; }
+  .footer-v2 { padding: 24px 24px 32px; }
+  .footer-v2-bottom { flex-direction: column; gap: 16px; text-align: center; }
+  .footer-v2-links { flex-wrap: wrap; justify-content: center; }
+  .problems-wrap { padding: 48px 24px; border-radius: 24px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ============================================
+     HEADER
+     ============================================ -->
+<header class="header" id="header">
+  <a href="#" class="logo">Calysta</a>
+  <nav>
+    <ul class="nav-menu" id="navMenu">
+      <li><a href="#problemes" class="nav-link">Problèmes</a></li>
+      <li><a href="#solution" class="nav-link">Solution</a></li>
+      <li><a href="#offres" class="nav-link">Offres</a></li>
+      <li><a href="#faq" class="nav-link">FAQ</a></li>
+    </ul>
+  </nav>
+  <a href="#contact" class="nav-cta">Demander une démo</a>
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</header>
+
+<!-- ============================================
+     HERO
+     ============================================ -->
+<section class="hero" id="accueil">
+  <div class="hero-orb hero-orb-1"></div>
+  <div class="hero-orb hero-orb-2"></div>
+
+  <p class="hero-kicker">La santé mentale, enfin une infrastructure</p>
+  <h1 class="hero-title">Vos équipes s'épuisent.<br>Il est temps de les restaurer.</h1>
+  <p class="hero-subtitle">
+    Calysta conçoit et installe des salles de sieste immersives et des espaces de récupération mentale clé en main — directement dans votre établissement scolaire ou votre entreprise.
+  </p>
+  <div class="hero-buttons">
+    <a href="#contact" class="btn-primary">Demander une démo</a>
+    <a href="#solution" class="btn-secondary">Découvrir la solution</a>
+  </div>
+
+  <div class="hero-scroll">
+    <span>Explorer</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- ============================================
+     PROBLÈMES — STATS
+     ============================================ -->
+<section class="section" id="problemes">
+  <div class="problems-wrap">
+    <p class="section-kicker">L'urgence est réelle</p>
+    <h2 class="section-title">La crise silencieuse qui coûte des milliards</h2>
+    <p class="section-subtitle">
+      Derrière chaque chiffre, des vies abîmées et des organisations fragilisées. Les solutions actuelles n'arrivent pas à la cheville de l'ampleur du problème.
+    </p>
+
+    <div class="problems-grid">
+      <div class="problem-card">
+        <div class="problem-stat">3 000 €</div>
+        <p class="problem-desc">Coût moyen annuel par salarié lié au stress et à l'épuisement professionnel.</p>
+      </div>
+      <div class="problem-card">
+        <div class="problem-stat">+40%</div>
+        <p class="problem-desc">D'arrêts maladie liés à des problèmes de santé mentale depuis 5 ans.</p>
+      </div>
+      <div class="problem-card">
+        <div class="problem-stat">1/3</div>
+        <p class="problem-desc">Des jeunes souffrent d'un niveau de fatigue cognitive qui impacte leurs résultats scolaires.</p>
+      </div>
+    </div>
+
+    <div class="pain-list" style="margin-top:60px;">
+      <div class="pain-item">
+        <div class="pain-icon">🧠</div>
+        <div class="pain-text">
+          <h4>Épuisement cognitif chronique</h4>
+          <p>Les salariés et étudiants accumulent une dette de sommeil et d'attention qui détruit productivité et moral.</p>
+        </div>
+      </div>
+      <div class="pain-item">
+        <div class="pain-icon">📉</div>
+        <div class="pain-text">
+          <h4>Absentéisme et turnover élevés</h4>
+          <p>Le départ d'un talent ou une longue absence coûtent bien plus que la prévention.</p>
+        </div>
+      </div>
+      <div class="pain-item">
+        <div class="pain-icon">🏫</div>
+        <div class="pain-text">
+          <h4>Absence d'infrastructures adaptées</h4>
+          <p>Ni les écoles ni les entreprises ne disposent d'espaces physiques dédiés à la récupération mentale.</p>
+        </div>
+      </div>
+      <div class="pain-item">
+        <div class="pain-icon">🧩</div>
+        <div class="pain-text">
+          <h4>Neuroatypiques laissés pour compte</h4>
+          <p>Les profils sensibles ont besoin de retraites sensorielles que les open spaces et les amphis ne peuvent offrir.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+     PRISE DE CONSCIENCE
+     ============================================ -->
+<section class="section awareness-section">
+  <div class="awareness-inner">
+    <p class="section-kicker" style="justify-content:center;">Le vrai problème</p>
+    <blockquote class="awareness-quote reveal">
+      Le bien-être ne se décrète pas en affichant une plante verte et un babyfoot. Il se construit, physiquement, dans l'espace.
+    </blockquote>
+    <p class="section-subtitle" style="margin:0 auto 56px; text-align:center;" class="reveal">
+      Les applications de méditation et les séances de yoga ponctuelles ne répondent pas à la demande structurelle. Ce qu'il manque, c'est un lieu — concret, immersif, permanent.
+    </p>
+
+    <div class="cost-cards">
+      <div class="cost-card">
+        <div class="cost-card-icon">💸</div>
+        <h3>Coût financier massif</h3>
+        <p>Le stress au travail représente 13,7 milliards d'euros par an en France. Chaque heure de récupération rapporte plusieurs heures de performance.</p>
+      </div>
+      <div class="cost-card">
+        <div class="cost-card-icon">❤️</div>
+        <h3>Coût humain insupportable</h3>
+        <p>Burnout, décrochage, anxiété sévère — les conséquences sur les individus durent des années et brisent des trajectoires.</p>
+      </div>
+      <div class="cost-card">
+        <div class="cost-card-icon">🔍</div>
+        <h3>Solutions actuelles insuffisantes</h3>
+        <p>Applications, ateliers, coaching — utiles, mais superficiels. Il manque l'essentiel : un espace physique dédié au repos de l'esprit.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+     SOLUTION
+     ============================================ -->
+<section class="section solution-section" id="solution">
+  <p class="section-kicker">Notre réponse</p>
+  <h2 class="section-title">L'espace de récupération mentale clé en main</h2>
+  <p class="section-subtitle">
+    Calysta installe dans vos locaux une salle de sieste et de récupération mentale complète — physique et digitale — en quelques semaines, sans aucun effort de votre part.
+  </p>
+
+  <div class="solution-layout">
+    <div class="solution-visual">
+      <div class="solution-room">
+        <div class="room-moon">🌙</div>
+        <p class="room-label">Votre espace Calysta</p>
+      </div>
+      <div class="solution-badges">
+        <span class="badge">✦ Clé en main</span>
+        <span class="badge">✦ Physique + Digital</span>
+        <span class="badge">✦ Installé en 2 semaines</span>
+      </div>
+    </div>
+
+    <div class="solution-features">
+      <div class="sol-feature">
+        <div class="sol-icon">😴</div>
+        <div class="sol-text">
+          <h4>Micro-sieste guidée</h4>
+          <p>Des cycles de repos optimisés de 10 à 20 minutes pour une récupération cognitive maximale, prouvée scientifiquement.</p>
+        </div>
+      </div>
+      <div class="sol-feature">
+        <div class="sol-icon">🎧</div>
+        <div class="sol-text">
+          <h4>Relaxation & recentrage cognitif</h4>
+          <p>Contenus audio et visuels guidés : cohérence cardiaque, visualisation, pleine conscience adaptés à chaque profil.</p>
+        </div>
+      </div>
+      <div class="sol-feature">
+        <div class="sol-icon">🌌</div>
+        <div class="sol-text">
+          <h4>Ambiance sensorielle immersive</h4>
+          <p>Lumière biodynamique, soundscaping, diffusion olfactive — une expérience sensorielle totale qui accélère la récupération.</p>
+        </div>
+      </div>
+      <div class="sol-feature">
+        <div class="sol-icon">📱</div>
+        <div class="sol-text">
+          <h4>Contenus digitaux intégrés</h4>
+          <p>Une plateforme de contenus évolutive, mise à jour régulièrement, synchronisée avec l'espace physique.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+     BÉNÉFICES PAR CIBLE
+     ============================================ -->
+<section class="section benefits-section">
+  <p class="section-kicker">Conçu pour vous</p>
+  <h2 class="section-title">Des bénéfices mesurables, pour chaque cible</h2>
+  <p class="section-subtitle">Que vous dirigiez une école ou une entreprise, l'impact est immédiat et quantifiable.</p>
+
+  <div class="benefits-tabs reveal">
+    <button class="tab-btn active" data-tab="ecoles">🏫 Écoles</button>
+    <button class="tab-btn" data-tab="entreprises">🏢 Entreprises</button>
+  </div>
+
+  <div class="tab-panel active" id="tab-ecoles">
+    <div class="benefits-grid">
+      <div class="benefit-item"><div class="benefit-check">✦</div><span>Amélioration des performances cognitives et des résultats</span></div>
+      <div class="benefit-item"><div class="benefit-check">✦</div><span>Prévention du décrochage scolaire par la gestion du stress</span></div>
+      <div class="benefit-item"><div class="benefit-check">✦</div><span>Fidélisation des étudiants et attractivité accrue de l'établissement</span></div>
+      <div class="benefit-item"><div class="benefit-check">✦</div><span>Inclusion des profils neuroatypiques avec un espace adapté</span></div>
+      <div class="benefit-item"><div class="benefit-check">✦</div><span>Différenciation forte dans un marché éducatif compétitif</span></div>
+      <div class="benefit-item"><div class="benefit-check">✦</div><span>Engagement et bien-être durable de la communauté scolaire</span></div>
+    </div>
+  </div>
+
+  <div class="tab-panel" id="tab-entreprises">
+    <div class="benefits-grid">
+      <div class="benefit-item"><div class="benefit-check">✦</div><span>Optimisation du capital humain et de la productivité collective</span></div>
+      <div class="benefit-item"><div class="benefit-check">✦</div><span>Réduction mesurable de l'absentéisme et des arrêts maladie</span></div>
+      <div class="benefit-item"><div class="benefit-check">✦</div><span>Baisse des coûts liés au stress et au turnover</span></div>
+      <div class="benefit-item"><div class="benefit-check">✦</div><span>Amélioration de la performance et de la créativité des équipes</span></div>
+      <div class="benefit-item"><div class="benefit-check">✦</div><span>Marque employeur renforcée pour attirer les talents</span></div>
+      <div class="benefit-item"><div class="benefit-check">✦</div><span>Engagement salarié durable dans la durée</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+     OFFRES
+     ============================================ -->
+<section class="section offers-section" id="offres">
+  <p class="section-kicker">Nos formules</p>
+  <h2 class="section-title">Une solution adaptée à chaque situation</h2>
+  <p class="section-subtitle">Deux formats pensés pour s'intégrer sans friction dans votre organisation, quelle que soit sa taille.</p>
+
+  <div class="offers-grid">
+    <!-- Location -->
+    <div class="offer-card offer-card--location">
+      <span class="offer-tag offer-tag--location">Location</span>
+      <h3 class="offer-title">Calysta<br>Abonnement</h3>
+      <p class="offer-desc">
+        Profitez d'un espace Calysta complet sans investissement initial. Installation incluse, maintenance assurée, contenus mis à jour régulièrement.
+      </p>
+      <ul class="offer-perks">
+        <li>Installation et configuration complètes</li>
+        <li>Matériel premium fourni et entretenu</li>
+        <li>Contenus digitaux évolutifs inclus</li>
+        <li>Support et formation de vos équipes</li>
+      </ul>
+      <div class="offer-guarantee">
+        🛡️ Abonnement garantie inclus — maintenance, remplacement, entretien
+      </div>
+      <a href="#contact" class="btn-primary">Demander un devis</a>
+    </div>
+
+    <!-- Sur mesure -->
+    <div class="offer-card offer-card--custom">
+      <span class="offer-tag offer-tag--custom">Sur mesure</span>
+      <h3 class="offer-title">Calysta<br>Premium</h3>
+      <p class="offer-desc">
+        Un espace pensé de A à Z selon vos contraintes architecturales, votre culture d'entreprise et vos objectifs. L'excellence à votre image.
+      </p>
+      <ul class="offer-perks">
+        <li>Audit et conception personnalisée</li>
+        <li>Architecture sensorielle sur mesure</li>
+        <li>Contenus exclusifs à votre marque</li>
+        <li>Accompagnement dédié long terme</li>
+      </ul>
+      <div class="offer-guarantee">
+        🛡️ Garantie totale incluse — abonnement maintenance premium
+      </div>
+      <a href="#contact" class="btn-primary">Parler à un expert</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+     DIFFÉRENCIATION
+     ============================================ -->
+<section class="section diff-section">
+  <p class="section-kicker" style="justify-content:center;">Pourquoi Calysta</p>
+  <h2 class="section-title" style="text-align:center;margin:0 auto 60px;">L'unique solution physique + digitale du marché</h2>
+
+  <div class="diff-grid">
+    <div class="diff-card">
+      <span class="diff-icon">🏆</span>
+      <div class="diff-title">Acteur unique</div>
+      <p class="diff-text">Aucun concurrent ne propose l'intégration complète espace physique + système immersif + contenus guidés.</p>
+    </div>
+    <div class="diff-card">
+      <span class="diff-icon">🔄</span>
+      <div class="diff-title">Modulaire & évolutif</div>
+      <p class="diff-text">Des packs adaptables qui grandissent avec votre organisation, sans rigidité et sans coûts cachés.</p>
+    </div>
+    <div class="diff-card">
+      <span class="diff-icon">⚡</span>
+      <div class="diff-title">Clé en main total</div>
+      <p class="diff-text">De la conception à l'installation en passant par la formation — vous n'avez rien à gérer, nous nous occupons de tout.</p>
+    </div>
+    <div class="diff-card">
+      <span class="diff-icon">💎</span>
+      <div class="diff-title">Premium & innovant</div>
+      <p class="diff-text">Un positionnement haut de gamme qui renforce votre image et distingue votre établissement sur le marché.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+     COMMUNAUTÉ
+     ============================================ -->
+<div style="padding: 0 0 80px;">
+  <div class="community-section reveal">
+    <p class="section-kicker" style="justify-content:center;">Notre vision</p>
+    <h2 class="section-title" style="text-align:center;margin:0 auto 24px;">Une safe place pour chaque esprit</h2>
+
+    <div class="community-visual">
+      <div class="ring ring-1"></div>
+      <div class="ring ring-2"></div>
+      <div class="ring ring-3"></div>
+      <div class="community-core">🌿</div>
+    </div>
+
+    <p class="community-text">
+      Calysta, c'est plus qu'une salle. C'est le début d'une culture du bien-être ancré dans le quotidien. Une communauté d'établissements et d'entreprises qui croient que la récupération mentale est aussi essentielle que la performance.
+    </p>
+    <a href="#contact" class="btn-primary">Rejoindre le mouvement</a>
+  </div>
+</div>
+
+<!-- ============================================
+     FAQ
+     ============================================ -->
+<section class="faq-section" id="faq">
+  <div class="faq-container">
+    <div class="faq-left">
+      <p class="faq-kicker">Questions fréquentes</p>
+      <h2 class="faq-title">Tout ce que vous voulez savoir</h2>
+      <p class="faq-subtitle">Vous avez une question spécifique ? Notre équipe vous répond en moins de 24h.</p>
+    </div>
+    <div class="faq-right">
+      <div class="faq-item">
+        <button class="faq-question">
+          <span>Combien de temps dure l'installation ?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <p>L'installation d'un espace Calysta standard prend entre 1 et 2 semaines selon la configuration choisie. Notre équipe s'occupe de tout, de la logistique à la mise en service, sans perturber votre activité.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question">
+          <span>Quelle surface faut-il prévoir ?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <p>Nos solutions s'adaptent à des surfaces de 15m² à 100m² et plus. Nous réalisons un audit de vos locaux pour proposer la configuration optimale selon votre espace disponible.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question">
+          <span>Comment fonctionne la maintenance ?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <p>Chaque offre inclut un abonnement de garantie couvrant l'entretien régulier, le remplacement du matériel en cas de panne et la mise à jour des contenus digitaux. Vous n'avez rien à gérer.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question">
+          <span>Quels sont les résultats attendus ?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <p>Nos clients observent en moyenne une baisse de 20 à 35% de l'absentéisme dans les 6 premiers mois, et un net gain de satisfaction et d'engagement des collaborateurs ou des étudiants.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question">
+          <span>Y a-t-il un engagement de durée ?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <p>L'offre location est proposée à partir d'un engagement de 12 mois. L'offre sur mesure est adaptée à vos besoins lors du devis personnalisé. Nous restons flexibles pour nous adapter à votre situation.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+     CTA FINAL
+     ============================================ -->
+<section class="cta-final" id="contact">
+  <p class="cta-final-kicker">Passez à l'action</p>
+  <h2 class="cta-final-title">Vos équipes méritent un espace pour récupérer</h2>
+  <p class="cta-final-sub">
+    Rejoignez les établissements qui ont fait de la récupération mentale un pilier de leur performance. Première consultation offerte.
+  </p>
+  <div class="cta-final-buttons">
+    <a href="mailto:contact@napspace.fr" class="btn-primary">Demander une démo gratuite</a>
+    <a href="tel:+33100000000" class="btn-secondary">Nous appeler</a>
+  </div>
+</section>
+
+<!-- ============================================
+     FOOTER V2
+     ============================================ -->
+<div class="footer-v2-wrap">
+  <div class="footer-v2">
+    <h2 class="footer-v2-title">Calysta</h2>
+    <p class="footer-v2-subtitle">La récupération mentale, enfin une infrastructure.</p>
+    <a href="#contact" class="btn-primary footer-v2-btn">Demander une démo →</a>
+    <div class="footer-v2-social">
+      <a href="#" aria-label="LinkedIn">in</a>
+      <a href="#" aria-label="Instagram">ig</a>
+      <a href="#" aria-label="Twitter">𝕏</a>
+    </div>
+    <div class="footer-v2-bottom">
+      <span>© 2025 Calysta. Tous droits réservés.</span>
+      <div class="footer-v2-links">
+        <a href="#">Mentions légales</a>
+        <a href="#">Confidentialité</a>
+        <a href="#">Contact</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================
+     JAVASCRIPT
+     ============================================ -->
+<script src="script.js" defer></script>
+</body>
+</html>
