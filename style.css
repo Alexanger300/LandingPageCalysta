@@ -936,7 +936,7 @@ body {
     padding: 10px;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 40px;
+    gap: 24px;
     width: 100%;
 }
 
@@ -946,6 +946,9 @@ body {
     transition: all 0.3s ease;
 }
 
+.team-member:nth-child(2) h3 {
+    margin-top: -30px;
+}
 .team-member:hover {
     transform: translateY(-8px);
 }
