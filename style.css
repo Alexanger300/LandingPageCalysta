@@ -18,8 +18,13 @@
    RESET & BASE
    ============================================ */
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-html { scroll-behavior: smooth; }
+html {
+  scroll-behavior: smooth;
+  width: 100%;
+}
 body {
+  width: 100%;
+  min-width: 0;
   font-family: 'NationalPark', sans-serif;
   background-color: var(--color-primary);
   color: var(--color-light);
@@ -863,22 +868,25 @@ body {
   .hamburger { display: flex; }
   .nav-cta { display: none; }
  
-  .hero { padding: 100px 24px 60px; }
-  .section { padding: 60px 24px; }
+  .hero { padding: 100px 16px 60px; }
+  .section { padding: 60px 18px; max-width: 100%; margin: 0; }
+  .faq-section, .footer-v2-wrap, .footer-v2, .about { max-width: 100%; margin: 0; padding-left: 16px; padding-right: 16px; }
   .problems-grid { grid-template-columns: 1fr; }
   .pain-list { grid-template-columns: 1fr; }
   .cost-cards { grid-template-columns: 1fr; }
   .offers-grid { grid-template-columns: 1fr; }
   .diff-grid { grid-template-columns: repeat(2, 1fr); }
   .benefits-grid { grid-template-columns: 1fr; }
-  .community-section { margin: 0 16px; padding: 60px 24px; }
-  .faq-container { flex-direction: column; padding: 40px 24px; }
+  .community-section { margin: 0 16px; padding: 60px 20px; }
+  .faq-container { flex-direction: column; padding: 40px 18px; }
   .faq-left { max-width: 100%; }
-  .cta-final { padding: 80px 24px; }
-  .footer-v2 { padding: 24px 24px 32px; }
+  .cta-final { padding: 80px 18px; }
+  .footer-v2 { padding: 24px 16px 32px; }
   .footer-v2-bottom { flex-direction: column; gap: 16px; text-align: center; }
   .footer-v2-links { flex-wrap: wrap; justify-content: center; }
-  .problems-wrap { padding: 48px 24px; border-radius: 24px; }
+  .problems-wrap { padding: 48px 18px; border-radius: 24px; }
+  
+  .solution-badges { top: 5px; right: 5px; }
 }
 @media (max-width: 576px) {
   .hero-title { font-size: 2.5rem; line-height: 1.2; }
@@ -949,6 +957,20 @@ body {
   
   .hamburger { gap: 4px; padding: 6px; }
   .hamburger span { width: 22px; height: 2px; }
+  
+  .solution-visual { display: flex; flex-direction: column; align-items: center; }
+  .solution-badges {
+    position: static;
+    margin: 24px auto 0;
+    align-items: center;
+    text-align: center;
+  }
+  .badge {
+    width: min(100%, 280px);
+    white-space: normal;
+    padding: 8px 14px;
+    font-size: 13px;
+  }
 }
 /* ============================================
    SECTION À PROPOS - ÉQUIPE
