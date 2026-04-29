@@ -43,7 +43,7 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
 });
  
 /* --- FAQ accordion --- */
-document.querySelectorAll('.faq-question').forEach(btn => {
+document.querySelectorAll('.faq-question').forEach(btn =>
   btn.addEventListener('click', () => {
     const item = btn.closest('.faq-item');
     const isOpen = item.classList.contains('active');
