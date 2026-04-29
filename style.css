@@ -880,6 +880,76 @@ body {
   .footer-v2-links { flex-wrap: wrap; justify-content: center; }
   .problems-wrap { padding: 48px 24px; border-radius: 24px; }
 }
+@media (max-width: 576px) {
+  .hero-title { font-size: 2.5rem; line-height: 1.2; }
+  .hero-subtitle { font-size: 1.1rem; margin-bottom: 40px; }
+  .hero-buttons { gap: 16px; }
+  .btn-primary, .btn-secondary { padding: 14px 32px; font-size: 16px; }
+  
+  .section-title { font-size: 2rem; }
+  .section-subtitle { font-size: 16px; margin-bottom: 48px; }
+  
+  .problem-stat { font-size: 3rem; }
+  .problem-desc { font-size: 14px; }
+  
+  .pain-item { padding: 20px; }
+  .pain-text h4 { font-size: 15px; }
+  .pain-text p { font-size: 13px; }
+  
+  .awareness-quote { font-size: 1.8rem; }
+  
+  .cost-card { padding: 28px 20px; }
+  .cost-card h3 { font-size: 18px; }
+  .cost-card p { font-size: 14px; }
+  
+  .solution-room { aspect-ratio: 3/2; }
+  .room-moon { font-size: 60px; }
+  
+  .sol-feature { padding: 20px; }
+  .sol-text h4 { font-size: 16px; }
+  .sol-text p { font-size: 13px; }
+  
+  .benefits-tabs { flex-direction: column; }
+  .tab-btn { padding: 12px 20px; font-size: 14px; }
+  
+  .benefit-item { padding: 16px 20px; }
+  .benefit-item span { font-size: 14px; }
+  
+  .offer-card { padding: 40px 32px; }
+  .offer-title { font-size: 1.8rem; }
+  .offer-desc { font-size: 15px; }
+  .offer-perks li { font-size: 14px; }
+  
+  .diff-card { padding: 32px 20px; }
+  .diff-icon { font-size: 40px; }
+  .diff-title { font-size: 16px; }
+  .diff-text { font-size: 13px; }
+  
+  .community-section { padding: 48px 20px; }
+  .community-text { font-size: 16px; }
+  
+  .faq-title { font-size: 2.2rem; }
+  .faq-subtitle { font-size: 16px; }
+  .faq-question { font-size: 16px; padding: 16px 0; }
+  .faq-answer { font-size: 14px; }
+  
+  .cta-final-title { font-size: 2.5rem; }
+  .cta-final-sub { font-size: 16px; margin-bottom: 40px; }
+  
+  .footer-v2-title { font-size: 3rem; }
+  .footer-v2-subtitle { font-size: 18px; }
+  .footer-v2-columns { grid-template-columns: 1fr; gap: 40px; text-align: center; }
+  .footer-v2-col h3 { font-size: 2rem; }
+  
+  .about-title { font-size: 2.5rem; line-height: 1.2; }
+  .about-subtitle { font-size: 18px; }
+  .team-grid { grid-template-columns: 1fr; gap: 32px; }
+  .team-name { font-size: 22px; }
+  .team-role { font-size: 16px; }
+  
+  .hamburger { gap: 4px; padding: 6px; }
+  .hamburger span { width: 22px; height: 2px; }
+}
 /* ============================================
    SECTION À PROPOS - ÉQUIPE
    ============================================ */
