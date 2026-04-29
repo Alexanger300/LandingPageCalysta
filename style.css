@@ -103,11 +103,25 @@ body {
   letter-spacing: 0.03em;
 }
 .nav-link:hover { color: var(--color-accent); }
+.btn-primary,
+.btn-secondary,
+.nav-link,
+.faq-question,
+.footer-v2-links a,
+.benefit-item,
+.pain-item,
+.sol-feature,
+.cost-card,
+.diff-card,
+.offer-card,
+.team-member,
+.team-photo {
+  transition: all 0.3s ease;
+}
 .nav-cta {
   background: var(--color-accent); color: var(--color-primary);
   padding: 10px 28px; border-radius: 30px;
   font-weight: 700; font-size: 15px; text-decoration: none;
-  transition: all 0.3s ease;
 }
 .nav-cta:hover { background: #d4b89f; transform: translateY(-2px); box-shadow: 0 8px 20px rgba(227,203,147,0.35); }
  
@@ -290,7 +304,6 @@ body {
   border: 1px solid rgba(227,203,147,0.15);
   border-radius: 20px;
   background: rgba(27,20,100,0.5);
-  transition: all 0.3s ease;
   opacity: 0; transform: translateY(30px);
   transition: opacity 0.6s ease, transform 0.6s ease, background 0.3s ease, box-shadow 0.3s ease;
 }
@@ -323,7 +336,6 @@ body {
   padding: 24px; border-radius: 16px;
   background: rgba(86,77,176,0.15);
   border: 1px solid rgba(131,139,197,0.2);
-  transition: all 0.3s ease;
   opacity: 0; transform: translateX(-20px);
   transition: opacity 0.5s ease, transform 0.5s ease, background 0.3s ease;
 }
@@ -377,7 +389,7 @@ body {
   padding: 36px 28px; border-radius: 24px;
   background: linear-gradient(135deg, rgba(86,77,176,0.4), rgba(27,20,100,0.6));
   border: 1px solid rgba(131,139,197,0.25);
-  text-align: left; transition: all 0.4s ease;
+  text-align: left;
   opacity: 0; transform: translateY(30px);
   transition: opacity 0.6s ease, transform 0.6s ease, box-shadow 0.3s ease;
 }
@@ -442,7 +454,6 @@ body {
   padding: 24px; border-radius: 16px;
   border: 1px solid rgba(131,139,197,0.2);
   background: rgba(86,77,176,0.1);
-  transition: all 0.3s ease;
   opacity: 0; transform: translateX(30px);
   transition: opacity 0.5s ease, transform 0.5s ease, background 0.3s ease;
 }
@@ -511,7 +522,6 @@ body {
 .offer-card {
   border-radius: 32px; padding: 52px 44px;
   position: relative; overflow: hidden;
-  transition: all 0.4s ease;
   opacity: 0; transform: translateY(30px);
   transition: opacity 0.6s ease, transform 0.6s ease, box-shadow 0.3s ease;
 }
@@ -566,7 +576,6 @@ body {
   text-align: center; padding: 40px 24px; border-radius: 24px;
   background: rgba(86,77,176,0.12);
   border: 1px solid rgba(131,139,197,0.2);
-  transition: all 0.4s ease;
   opacity: 0; transform: translateY(30px);
   transition: opacity 0.5s ease, transform 0.5s ease, background 0.3s ease;
 }
@@ -869,4 +878,135 @@ body {
   .footer-v2-bottom { flex-direction: column; gap: 16px; text-align: center; }
   .footer-v2-links { flex-wrap: wrap; justify-content: center; }
   .problems-wrap { padding: 48px 24px; border-radius: 24px; }
+}
+/* ============================================
+   SECTION À PROPOS - ÉQUIPE
+   ============================================ */
+
+.about {
+    padding: 80px 20px 100px;
+    width: 100%;
+    max-width: 1197.49px;
+    margin: 0 auto;
+    text-align: center;
+    background: linear-gradient(180deg, #1B1464 0%, rgba(86, 77, 176, 0.5) 50.96%, #1B1464 100%);
+    border-radius: 0px 0px 100px 100px;
+    position: relative;
+}
+
+.about-kicker {
+    font-family: 'NationalPark', sans-serif;
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 64px;
+    color: #838BC5;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+.about-title {
+    font-family: 'NationalPark', sans-serif;
+    font-size: 48px;
+    font-weight: 800;
+    line-height: 64px;
+    margin: 0 auto 20px;
+    max-width: 905px;
+    background: linear-gradient(90deg, #E3CB93 0%, #C58BA6 79.33%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-align: center;
+    animation: fadeInDown 0.8s ease-out;
+}
+
+.about-subtitle {
+    font-family: 'NationalPark', sans-serif;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 24px;
+    color: #D9D9D9;
+    margin: 0 auto 60px;
+    max-width: 629px;
+    text-align: center;
+}
+
+.team-grid {
+    padding: 10px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+    width: 100%;
+}
+
+.team-member {
+    text-align: center;
+    animation: fadeInUp 0.8s ease-out;
+    transition: all 0.3s ease;
+}
+
+.team-member:hover {
+    transform: translateY(-8px);
+}
+
+.team-photo {
+    width: 100%;
+    aspect-ratio: 0.85;
+    background-size: cover;
+    background-position: center;
+    margin-bottom: 10px;
+    transition: all 0.3s ease;
+    border-radius: 8px;
+}
+
+.team-member:hover .team-photo {
+    filter: brightness(1.1) contrast(1.05);
+    transform: scale(1.02);
+}
+
+.team-photo--alyssa {
+    aspect-ratio: 0.78;
+    background-position: center 60%;
+}
+
+.team-name {
+    font-family: 'NationalPark', sans-serif;
+    font-size: 25px;
+    font-weight: 700;
+    line-height: 24px;
+    color: #FFFFFF;
+    margin: 0 0 8px;
+    text-align: center;
+}
+
+.team-role {
+    font-family: 'Helvetica LT Pro', 'Helvetica', sans-serif;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 24px;
+    color: #838BC5;
+    margin: 0;
+    text-align: center;
+}
+
+.btn-about_more {
+    margin-top: 50px;
+    background: #E3CB93;
+    color: #1B1464;
+    border-radius: 30px;
+    padding: 11px 42px;
+    font-family: 'Helvetica LT Pro', 'Helvetica', sans-serif;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 24px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-block;
+    min-width: 187px;
+}
+
+.btn-about_more:hover {
+    background-color: #d4b89f;
+    transform: translateY(-2px);
 }
